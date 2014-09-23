@@ -18,4 +18,4 @@ frontend/
 * CoffeScript compilation
 * JavaScript and CSS piping
 * Image piping
-* Live reload
+* Live reload (insert `<script src="//localhost:35729/livereload.js"></script>`)
