@@ -22,12 +22,26 @@ module.exports = (grunt) ->
 			scripts:
 				files: "#{srcDir}coffee/**/*.coffee"
 				tasks: ["newer:coffee:development", "injector:development"]
+				options:
+					livereload: true
 			styles:
 				files: "#{srcDir}stylus/**/*.styl"
 				tasks: ["newer:stylus:dev", "injector:development"]
+				options:
+					livereload: true
+			images:
+				files: "#{srcDir}img/**/*"
+				tasks: ["newer:copy:img"]
+			css:
+				files: "#{srcDir}css/**/*.css"
+				tasks: ["newer:copy:css", "injector:development"]
+				options:
+					livereload: true
 			docs:
 				files: "#{srcDir}/*.php"
 				tasks: ["newer:copy:php", "injector:development"]
+				options:
+					livereload: true
 		
 		coffee:
 			options:
@@ -127,7 +141,7 @@ module.exports = (grunt) ->
 					src: ["**"]
 					dest: "wordpress/wp-content/themes/MyWpTheme/img/"
 				]
-			libs:
+			js_libs:
 				files: [
 					expand: true
 					cwd: "#{srcDir}js/"
@@ -137,7 +151,7 @@ module.exports = (grunt) ->
 			css:
 				files: [
 					expand: true
-					cwd: "#{srcDir}stylus/"
+					cwd: "#{srcDir}css/"
 					src: ["**/*.css"]
 					dest: "wordpress/wp-content/themes/MyWpTheme/"
 				]
@@ -190,7 +204,7 @@ module.exports = (grunt) ->
 		"clean:development"
 		"copy:php"
 		"copy:img"
-		"copy:libs"
+		"copy:js_libs"
 		"stylus:dev"
 		"coffee:development"
 		"injector:development"
