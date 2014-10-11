@@ -38,7 +38,7 @@ module.exports = (grunt) ->
 				options:
 					livereload: true
 			docs:
-				files: "#{srcDir}/*.php"
+				files: "#{srcDir}/**/*.php"
 				tasks: ["newer:copy:php", "injector:development"]
 				options:
 					livereload: true
@@ -108,14 +108,15 @@ module.exports = (grunt) ->
 		injector:
 			options:
 				ignorePath: "wordpress/"
-
 			development:
 				files:
 					"wordpress/wp-content/themes/MyWpTheme/header.php": [
-						"wordpress/wp-content/themes/MyWpTheme/*.css"
+						"wordpress/wp-content/themes/MyWpTheme/**/*.css"
 					]
 					"wordpress/wp-content/themes/MyWpTheme/footer.php": [
-						"wordpress/wp-content/themes/MyWpTheme/js/**/*.js",
+						"wordpress/wp-content/themes/MyWpTheme/js/libs/**/*.js"
+						"wordpress/wp-content/themes/MyWpTheme/js/MyWpTheme.js"
+						"wordpress/wp-content/themes/MyWpTheme/js/**/*.js"
 					]
 			prod:
 				files:
@@ -123,7 +124,9 @@ module.exports = (grunt) ->
 						"wordpress/wp-content/themes/MyWpTheme/*.css"
 					]
 					"wordpress/wp-content/themes/MyWpTheme/footer.php": [
-						"wordpress/wp-content/themes/MyWpTheme/js/**/*.js",
+						"wordpress/wp-content/themes/MyWpTheme/js/libs/**/*.js"
+						"wordpress/wp-content/themes/MyWpTheme/js/MyWpTheme.js"
+						"wordpress/wp-content/themes/MyWpTheme/js/**/*.js"
 					]
 		
 		copy:
@@ -131,7 +134,7 @@ module.exports = (grunt) ->
 				files: [
 					expand: true
 					cwd: "#{srcDir}"
-					src: ["*.php"]
+					src: ["**/*.php"]
 					dest: "wordpress/wp-content/themes/MyWpTheme/"
 				]
 			img:
@@ -146,7 +149,7 @@ module.exports = (grunt) ->
 					expand: true
 					cwd: "#{srcDir}js/"
 					src: ["**"]
-					dest: "wordpress/wp-content/themes/MyWpTheme/js/libs"
+					dest: "wordpress/wp-content/themes/MyWpTheme/js/libs/"
 				]
 			css:
 				files: [
@@ -154,6 +157,13 @@ module.exports = (grunt) ->
 					cwd: "#{srcDir}css/"
 					src: ["**/*.css"]
 					dest: "wordpress/wp-content/themes/MyWpTheme/"
+				]
+			fonts:
+				files: [
+					expand: true
+					cwd: "#{srcDir}fonts/"
+					src: ["**/*"]
+					dest: "wordpress/wp-content/themes/MyWpTheme/fonts/"
 				]
 		
 		
@@ -204,6 +214,8 @@ module.exports = (grunt) ->
 		"clean:development"
 		"copy:php"
 		"copy:img"
+		"copy:css"
+		"copy:fonts"
 		"copy:js_libs"
 		"stylus:dev"
 		"coffee:development"
@@ -216,6 +228,7 @@ module.exports = (grunt) ->
 		"copy:php"
 		"copy:img"
 		"copy:css"
+		"copy:fonts"
 		"stylus:prod"
 		"cssmin"
 		"coffee:prod"
