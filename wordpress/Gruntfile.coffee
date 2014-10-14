@@ -60,7 +60,7 @@ module.exports = (grunt) ->
 					bare: false
 					join: true
 				files:
-					"wordpress/wp-content/themes/MyWpTheme/js/scripts.js": "#{srcDir}coffee/**/*.coffee"
+					"wordpress/wp-content/themes/MyWpTheme/js/scripts.js": ["#{srcDir}coffee/*.coffee", "#{srcDir}coffee/**/*.coffee"]
 		
 		stylus:
 			dev:
@@ -93,7 +93,7 @@ module.exports = (grunt) ->
 					"wordpress/wp-content/themes/MyWpTheme/js/scripts.js"
 					"wordpress/wp-content/themes/MyWpTheme/js/scripts.min.js"
 					"wordpress/wp-content/themes/MyWpTheme/*.css"
-					"!wordpress/wp-content/themes/kolya/style.#{randCss}.css"
+					"!wordpress/wp-content/themes/MyWpTheme/style.#{randCss}.css"
 				]
 			start: ["latest.zip"]
 		
