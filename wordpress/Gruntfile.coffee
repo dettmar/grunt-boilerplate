@@ -80,7 +80,6 @@ module.exports = (grunt) ->
 		
 		# Js concat
 		concat:
-				
 			prod_js:
 				src: ["#{srcDir}js/*.js", "wordpress/wp-content/themes/MyWpTheme/js/scripts.min.js"]
 				dest: "wordpress/wp-content/themes/MyWpTheme/js/scripts.min.#{randJs}.js" 
@@ -166,6 +165,27 @@ module.exports = (grunt) ->
 					dest: "wordpress/wp-content/themes/MyWpTheme/fonts/"
 				]
 		
+		"ftp-deploy":
+			full:
+				auth:
+					host: "ftp.server.com"
+					port: 21
+					authKey: "key1"
+					authPath: "../ftppass.json"
+				src: "wordpress/wp-content/themes/MyWpTheme/"
+				dest: "/__WPINSTALLROOT__/wp-content/themes/MyWpTheme/"
+				forceVerbose: true
+			quick:
+				auth:
+					host: "ftp.server.com"
+					port: 21
+					authKey: "key1"
+					authPath: "../ftppass.json"
+				src: "wordpress/wp-content/themes/MyWpTheme/"
+				dest: "/__WPINSTALLROOT__/wp-content/themes/MyWpTheme/"
+				forceVerbose: true
+				exclusions: ["wordpress/wp-content/themes/MyWpTheme/img/**/*", "wordpress/wp-content/themes/MyWpTheme/fonts/**/*"]
+		
 		
 		mkdir:
 			init:
@@ -202,6 +222,7 @@ module.exports = (grunt) ->
 	@loadNpmTasks "grunt-mkdir"
 	@loadNpmTasks "grunt-curl"
 	@loadNpmTasks "grunt-zip"
+	@loadNpmTasks "grunt-ftp-deploy"
 	
 	@registerTask "start", [
 		'mkdir:init'
@@ -223,7 +244,8 @@ module.exports = (grunt) ->
 		"watch"
 	]
 	
-	@registerTask "prod", [
+	
+	prodTasks = [
 		"clean:development"
 		"copy:php"
 		"copy:img"
@@ -235,5 +257,12 @@ module.exports = (grunt) ->
 		"uglify:prod"
 		"concat:prod_js"
 		"clean:prod"
+		"imageEmbed:dist"
 		"injector:prod"
 	]
+	
+	
+	@registerTask "prod", prodTasks
+	@registerTask "prodpush", prodTasks.concat("ftp-deploy:full")
+	@registerTask "push", ["ftp-deploy:full"]
+	@registerTask "pushquick", ["ftp-deploy:quick"]
