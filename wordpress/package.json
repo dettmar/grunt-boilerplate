@@ -16,6 +16,7 @@
     "grunt-mkdir": "^0.1.2",
     "grunt-curl": "^2.0.3",
     "grunt-zip": "^0.16.0",
-    "grunt-ftp-deploy": "^0.1.10"
+    "grunt-ftp-deploy": "^0.1.10",
+    "grunt-combine-media-queries": "^1.0.19"
   }
 }

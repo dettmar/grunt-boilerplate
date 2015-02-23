@@ -165,6 +165,20 @@ module.exports = (grunt) ->
 					dest: "wordpress/wp-content/themes/MyWpTheme/fonts/"
 				]
 		
+		imageEmbed:
+			dist:
+				src: ["wordpress/wp-content/themes/MyWpTheme/style.#{randCss}.css"]
+				dest: "wordpress/wp-content/themes/MyWpTheme/style.#{randCss}.css"
+				options:
+					deleteAfterEncoding: false
+		
+		cmq:
+			options:
+				log: true
+			prod:
+				files:
+					"wordpress/wp-content/themes/MyWpTheme/": "wordpress/wp-content/themes/MyWpTheme/*.css"
+		
 		"ftp-deploy":
 			full:
 				auth:
@@ -223,6 +237,7 @@ module.exports = (grunt) ->
 	@loadNpmTasks "grunt-curl"
 	@loadNpmTasks "grunt-zip"
 	@loadNpmTasks "grunt-ftp-deploy"
+	@loadNpmTasks "grunt-combine-media-queries"
 	
 	@registerTask "start", [
 		'mkdir:init'
@@ -252,6 +267,7 @@ module.exports = (grunt) ->
 		"copy:css"
 		"copy:fonts"
 		"stylus:prod"
+		"cmq:prod"
 		"cssmin"
 		"coffee:prod"
 		"uglify:prod"
